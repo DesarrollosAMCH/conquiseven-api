@@ -16,3 +16,21 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+Route::group(['prefix' => 'v1'], function(){
+
+    Route::group(['prefix' => 'auth'], function (){
+        Route::post('evaluator', 'AuthController@evaluator');
+    });
+
+    Route::group(['middleware'=> 'auth:api'], function(){
+
+        Route::get('home', function(){
+            return response()->json([
+                'message' => 'hello!'
+            ]);
+        });
+    });
+});
+
